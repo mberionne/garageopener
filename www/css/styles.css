@@ -27,6 +27,14 @@ body {
   height: 40px;
 }
 
+/* Class to align image to right for the settings */
+img.settingsIcon {
+  float: right;
+  margin-left: 10px;
+  margin-right: 20px;
+  margin-top: 3px;
+}
+
 /* Line after header */
 .afterheader {
   background-color: blue;
@@ -39,16 +47,22 @@ body {
   color: black;
   margin-top: 70px;
   margin-bottom: 50px;
-  margin-left: 20%;
-  margin-right: 20%;
-  padding: 20px;
+  margin-left: 10%;
+  margin-right: 10%;
+  padding: 16px;
   border: 1px solid #bbbbbb;
   border-radius: 8px;
 }
 
+/* Refresh button */
+img.refreshButton {
+  border: 2px;
+  margin-right: 35px;
+}
+
 /* Fieldset for the page with settings */
 fieldset {
-  width: 350px;
+  width: 100%;
   border: 1px solid #dcdcdc;
   border-radius: 10px;
   padding: 20px;
@@ -84,20 +98,6 @@ button.savebutton {
 .errorInput {
   color: red;
   display: normal;
-}
-
-/* Class to align image to right */
-img.settingsIcon {
-  float: right;
-  margin-left: 10px;
-  margin-right: 20px;
-  margin-top: 3px;
-}
-
-/* Refresh button */
-img.refreshButton {
-  border: 2px;
-  margin-right: 45px;
 }
 
 /* Action button */
