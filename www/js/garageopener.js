@@ -203,12 +203,12 @@ function loadSettings()
   storedDeviceId = localStorage.getItem('deviceId');
   if (storedDeviceId == null)
   {
-    storedDeviceId = 'Dev ID - NULL';
+    storedDeviceId = 'Insert Device ID';
   }
   storedAccessToken = localStorage.getItem('accessToken');
   if (storedAccessToken == null)
   {
-    storedAccessToken = 'Access token - NULL';
+    storedAccessToken = 'Insert Access token';
   }
   storedDuration = localStorage.getItem('duration');
   if (storedDuration == null)
