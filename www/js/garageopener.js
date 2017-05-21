@@ -10,8 +10,8 @@ var DOOR_STATUS_NO_CONFIG  = 7;
 var DOOR_STATUS_TIMEOUT    = 8;
 
 var URL_GET_STATUS         = "https://api.particle.io/v1/devices/DEVICE/doorstatus?access_token=TOKEN";
-var URL_OPEN_DOOR          = "https://api.particle.io/v1/devices/DEVICE/XXXopen?access_token=TOKEN";
-var URL_CLOSE_DOOR         = "https://api.particle.io/v1/devices/DEVICE/XXXclose?access_token=TOKEN";
+var URL_OPEN_DOOR          = "https://api.particle.io/v1/devices/DEVICE/open?access_token=TOKEN";
+var URL_CLOSE_DOOR         = "https://api.particle.io/v1/devices/DEVICE/close?access_token=TOKEN";
 
 var HTTP_TIMEOUT           = 8000;
 var HTTP_GET               = 'GET';
@@ -311,6 +311,7 @@ function handleSaveButton(e)
   document.getElementById('settingspage').className = "hidden";
 } /* handleSaveButton */
 
+
 function handleFocus(e)
 {
   /* Hide error messages, if present */
@@ -318,6 +319,7 @@ function handleFocus(e)
   document.getElementById('invalidAccessToken').className = "hidden";
   document.getElementById('invalidDuration').className = "hidden";
 } /* handleFocus */
+
 
 function windowLoad(e)
 {
@@ -331,7 +333,8 @@ function windowLoad(e)
   handleRefreshButton();
 } /* windowLoad */
 
-/* Listed for window load */
+
+/* Listener for window load */
 window.addEventListener('load', windowLoad, false);
 
 /* Register for button action */
