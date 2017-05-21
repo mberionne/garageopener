@@ -18,7 +18,9 @@
 
   <plugin name="cordova-plugin-whitelist"      source="npm" spec="1.1.0" />
   <allow-navigation href="*" />
+  <access origin=".*" />
   <access origin="https://api.particle.io"></access>
+  <access origin="*" />
   <allow-intent href="https://*/*" /> 
   
   <platform name="android">
