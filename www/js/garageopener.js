@@ -14,6 +14,8 @@ var URL_OPEN_DOOR          = "https://api.particle.io/v1/devices/DEVICE/XXXopen?
 var URL_CLOSE_DOOR         = "https://api.particle.io/v1/devices/DEVICE/XXXclose?access_token=TOKEN";
 
 var HTTP_TIMEOUT           = 8000;
+var HTTP_GET               = 'GET';
+var HTTP_POST              = 'POST';
 
 
 /* Door status */
@@ -69,7 +71,7 @@ function startHttpRequest(method, url, callback)
   if (!validateDeviceId(storedDeviceId) || !validateAccessToken(storedAccessToken))
   {
     updateDoorStatus(DOOR_STATUS_NO_CONFIG);
-    return;
+    return false;
   }
 
   /* Compose URL with correct device ID and access token */
@@ -93,6 +95,8 @@ function startHttpRequest(method, url, callback)
     }
   xmlhttp.open(method, url , true);
   xmlhttp.send();
+  
+  return true;
 } /* startHttpRequest */
 
 
@@ -156,9 +160,10 @@ function handleRefreshButton(e)
     return;
   }
   
-  startHttpRequest("GET", URL_GET_STATUS, httpResultDoorStatus);
-    
-  updateDoorStatus(DOOR_STATUS_REFRESHING);
+  if (startHttpRequest(HTTP_GET, URL_GET_STATUS, httpResultDoorStatus))
+  {  
+    updateDoorStatus(DOOR_STATUS_REFRESHING);
+  }
 } /* handleRefreshButton */
 
 
@@ -185,10 +190,11 @@ function handleActionButton(e)
   }
     
   /* Initiate HTTP request */
-  startHttpRequest("POST", url, httpResultDoorAction);
-   
-  /* Update door status */
-  updateDoorStatus(nextDoorStatus);
+  if (startHttpRequest(HTTP_POST, url, httpResultDoorAction))
+  {
+    /* Update door status */
+    updateDoorStatus(nextDoorStatus);
+  }
 } /* handleActionButton */
 
 
