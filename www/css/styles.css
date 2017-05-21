@@ -31,6 +31,10 @@ body {
   height: 40px;
 }
 
+.version {
+  font-size: 6pt;
+};
+
 img.settingsIcon {
   float: right;
   margin-left: 10px;
