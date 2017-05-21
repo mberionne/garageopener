@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+  <title>Garage Opener</title>
+  <style>
+    /* Class to hide element */
+    .hidden {
+      display: none;
+    }
+    /* Class to show element */
+    .visible {
+      display: normal;
+    }
+    /* Main body */
+    body {
+     background-color: white;
+     color: black;
+    }
+    /* Header */
+    .header {
+      font-size: 24pt;
+      border-width: thick;
+      text-align: center;
+      background-color: #ffab23;
+      background-image: -moz-linear-gradient(#ffec64, #ffab23);
+      background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffab23), to(#ffec64));
+      background-image: -webkit-linear-gradient(#ffec64, #ffab23);
+      background-image: -o-linear-gradient(#ffec64, #ffab23);
+      height: 40px;
+    }
+    /* Line after header */
+    .afterheader {
+      background-color: blue;
+      height: 2px;
+    }
+    /* Class to display current door status */
+    .doorstatus {
+      font-size: 16pt;
+      color: black;
+      margin-top: 70px;
+      margin-bottom: 50px;
+      margin-left: 20%;
+      margin-right: 20%;
+      padding: 20px;
+      border: 1px solid #bbbbbb;
+      border-radius: 8px;
+    }
+    /* Fieldset for the page with settings */
+    fieldset {
+      width: 350px;
+      border: 1px solid #dcdcdc;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: left;
+    }
+    legend {
+      background-color: #efefef;
+      border: 1px solid #dcdcdc;
+      border-radius: 10px;
+      padding: 5px 15px;
+      text-align: left;
+    }  
+    input {
+      font-size: 12pt;
+      width: 446px;
+      height: 25px;
+      text-align: left;
+      padding: 10px;
+      border: 1px solid;
+      background-color: #f2f2f2;
+    }
+    input:focus {
+      background-color: #ffffff;
+      border: 1px solid #b1e1e4;
+    }
+    button.savebutton {
+      font-size: 20pt;
+      background-color: #b3ffb3;
+      border-radius: 6px;
+      margin-top: 20px;
+    }
+    .errorInput {
+      color: red;
+      display: normal;
+    }
+    /* Class to align image to right */
+    img.settingsIcon {
+      float: right;
+      margin-left: 10px;
+      margin-right: 20px;
+      margin-top: 3px;
+    }
+    /* Refresh button */
+    img.refreshButton {
+      border: 2px;
+      margin-right: 45px;
+    }
+    /* Action button */
+    .actionDiv {
+      text-align: center;      
+      display: normal;
+    }
+    .actionButton {
+	    -moz-box-shadow:inset 0px 1px 0px 0px #7a8eb9;
+	    -webkit-box-shadow:inset 0px 1px 0px 0px #7a8eb9;
+	    box-shadow:inset 0px 1px 0px 0px #7a8eb9;
+      background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #637aad), color-stop(1, #5972a7));
+      background:-moz-linear-gradient(top, #637aad 5%, #5972a7 100%);
+      background:-webkit-linear-gradient(top, #637aad 5%, #5972a7 100%);
+      background:-o-linear-gradient(top, #637aad 5%, #5972a7 100%);
+      background:-ms-linear-gradient(top, #637aad 5%, #5972a7 100%);
+      background:linear-gradient(to bottom, #637aad 5%, #5972a7 100%);
+      filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#637aad', endColorstr='#5972a7',GradientType=0);
+      background-color:#637aad;
+      -moz-border-radius:10px;
+      -webkit-border-radius:10px;
+      border-radius:10px;
+      border:1px solid #314179;
+      display:inline-block;
+      cursor:pointer;
+      color:#ffffff;
+      font-family:Arial;
+      font-size:20px;
+      font-weight:bold;
+      padding:22px 25%;
+      text-decoration:none;
+    }
+    .actionButton:hover {
+      background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5972a7), color-stop(1, #637aad));
+      background:-moz-linear-gradient(top, #5972a7 5%, #637aad 100%);
+      background:-webkit-linear-gradient(top, #5972a7 5%, #637aad 100%);
+      background:-o-linear-gradient(top, #5972a7 5%, #637aad 100%);
+      background:-ms-linear-gradient(top, #5972a7 5%, #637aad 100%);
+      background:linear-gradient(to bottom, #5972a7 5%, #637aad 100%);
+      filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5972a7', endColorstr='#637aad',GradientType=0);
+      background-color:#5972a7;
+    }
+    .actionButton:active {
+      position:relative;
+      top:1px;
+    }
+  
+  </style>
+</head>
+<body>
+  <div class='header'>
+    Garage opener
+      <img src="settings.png" alt='Settings' title='Settings' class='settingsIcon' height="35" id='settingsIcon'/>
+  </div>
+  <div class='afterheader'>
+    &nbsp;
+  </div>
+  <div id='mainpage'>
+    <div class='doorstatus'>
+      Door status:
+      <table>
+      <tr>
+        <td>
+          <img src="update.png" alt='Refresh' title='Refresh' height='50' class='refreshButton' id='refreshButton'/>
+        </td>
+        <td id='doorstatustext' style='font-size: 20pt;'>
+         Closed
+        <td>
+       </tr>
+      </table>
+    </div>
+    <div id='actionDiv' class='actionDiv'>
+        <a href="#" id='actionButton' class='actionButton'>Open</a>
+    </div>
+  </div>
+  <div id='settingspage' class='hidden'>
+    <br />  
+    <fieldset>
+      <legend>
+        Settings
+      </legend>
+      Device Id:<br />
+      <input id="deviceId" type="text" maxlength='24'/><br />
+      <div id='invalidDeviceId' class='hidden'>
+        Invalid Device ID! It must be a string of 24 characters<br />
+      </div>
+      <br />
+      Access token:<br />
+      <input id="accessToken" type="text" maxlength='40' /><br />
+      <div id='invalidAccessToken' class='hidden'>
+        Invalid Access Token! It must be a string of 40 characters<br />
+      </div>
+      <br />
+      Duration (in seconds):<br />
+      <input id="duration" type="text" /><br />
+      <div id='invalidDuration' class='hidden'>
+        Invalid duration! It must be a number between
+        3 seconds and 60 seconds.<br />
+      </div>
+      <br />
+      <button type='button' id='saveButton' class='savebutton'>
+        Save
+      </button>
+    </fieldset>
+  </div>
+    
+  <script type="text/javascript" src="garageopener.js"></script>
+
+</body>
+</html>
