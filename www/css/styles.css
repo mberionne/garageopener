@@ -1,3 +1,11 @@
+/*******************************************
+   General definitions
+*******************************************/
+body {
+  background-color: white;
+  color: black;
+}
+
 /* Class to hide element */
 .hidden {
   display: none;
@@ -8,13 +16,9 @@
   display: normal;
 }
 
-/* Main body */
-body {
-  background-color: white;
-  color: black;
-}
-
-/* Header */
+/*******************************************
+   Header
+*******************************************/
 .header {
   font-size: 24pt;
   border-width: thick;
@@ -27,7 +31,6 @@ body {
   height: 40px;
 }
 
-/* Class to align image to right for the settings */
 img.settingsIcon {
   float: right;
   margin-left: 10px;
@@ -35,13 +38,14 @@ img.settingsIcon {
   margin-top: 3px;
 }
 
-/* Line after header */
 .afterheader {
   background-color: blue;
   height: 2px;
 }
 
-/* Class to display current door status */
+/*******************************************
+   Style for main page
+*******************************************/
 .doorstatus {
   font-size: 16pt;
   color: black;
@@ -58,46 +62,6 @@ img.settingsIcon {
 img.refreshButton {
   border: 2px;
   margin-right: 35px;
-}
-
-/* Fieldset for the page with settings */
-fieldset {
-  width: 90%;
-  border: 1px solid #dcdcdc;
-  border-radius: 10px;
-  padding: 5%;
-  text-align: left;
-}
-legend {
-  background-color: #efefef;
-  border: 1px solid #dcdcdc;
-  border-radius: 10px;
-  padding: 5px 15px;
-  text-align: left;
-}  
-input {
-  font-size: 12pt;
-  width: 95%;
-  height: 25px;
-  text-align: left;
-  padding: 3%;
-  border: 1px solid;
-  background-color: #f2f2f2;
-}
-input:focus {
-  background-color: #ffffff;
-  border: 1px solid #b1e1e4;
-}
-button.savebutton {
-  font-size: 20pt;
-  background-color: #b3ffb3;
-  border-radius: 6px;
-  margin-top: 20px;
-}
-
-.errorInput {
-  color: red;
-  display: normal;
 }
 
 /* Action button */
@@ -144,3 +108,50 @@ button.savebutton {
   position:relative;
   top:1px;
 }
+
+
+/*******************************************
+   Style for settings page
+*******************************************/
+fieldset {
+  width: 93%;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  padding: 3%;
+  text-align: left;
+}
+
+legend {
+  background-color: #efefef;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  padding: 5px 15px;
+  text-align: left;
+}  
+
+input {
+  font-size: 12pt;
+  width: 96%;
+  height: 25px;
+  text-align: left;
+  padding: 2%;
+  border: 1px solid;
+  background-color: #f2f2f2;
+}
+input:focus {
+  background-color: #ffffff;
+  border: 1px solid #b1e1e4;
+}
+
+button.savebutton {
+  font-size: 20pt;
+  background-color: #b3ffb3;
+  border-radius: 6px;
+  margin-top: 20px;
+}
+
+.errorInput {
+  color: red;
+  display: normal;
+}
+
