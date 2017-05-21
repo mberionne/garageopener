@@ -15,6 +15,12 @@
     Michele Berionne
   </author>
 
+
+  <plugin name="cordova-plugin-whitelist"      source="npm" spec="1.1.0" />
+  <allow-navigation href="*" />
+  <access origin="https://api.particle.io"></access>
+  <allow-intent href="https://*/*" /> 
+  
   <platform name="android">
     <!-- https://developer.android.com/guide/practices/ui_guidelines/icon_design_launcher.html
          xxxhdpi = 192 x 192
