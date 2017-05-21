@@ -17,7 +17,6 @@
 
   <!-- Permissions for network access -->
   <plugin name="cordova-plugin-whitelist" source="npm" spec="1.1.0" />
-  <!-- <allow-navigation href="*" />  -->
   <access origin="https://api.particle.io"></access>
   
   <platform name="android">

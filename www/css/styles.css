@@ -62,10 +62,10 @@ img.refreshButton {
 
 /* Fieldset for the page with settings */
 fieldset {
-  width: 100%;
+  width: 90%;
   border: 1px solid #dcdcdc;
   border-radius: 10px;
-  padding: 20px;
+  padding: 5%;
   text-align: left;
 }
 legend {
