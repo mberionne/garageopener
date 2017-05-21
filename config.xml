@@ -15,8 +15,8 @@
     Michele Berionne
   </author>
 
-
-  <plugin name="cordova-plugin-whitelist"      source="npm" spec="1.1.0" />
+  <!-- Permissions for network access -->
+  <plugin name="cordova-plugin-whitelist" source="npm" spec="1.1.0" />
   <allow-navigation href="*" />
   <access origin=".*" />
   <access origin="https://api.particle.io"></access>
@@ -24,14 +24,7 @@
   <allow-intent href="https://*/*" /> 
   
   <platform name="android">
-    <!-- https://developer.android.com/guide/practices/ui_guidelines/icon_design_launcher.html
-         xxxhdpi = 192 x 192
-         xxhdpi  = 144 x 144
-         xhdpi   = 96 x 96
-         hdpi    = 72 x 72
-         mdpi    = 48 x 48
-         ldpi    = 36 x 36
-    -->
+    <!-- https://developer.android.com/guide/practices/ui_guidelines/icon_design_launcher.html  -->
     <icon   src="www/res/icon/android/ic_launcher_ldpi.png"               density="ldpi" />
     <icon   src="www/res/icon/android/ic_launcher_mdpi.png"               density="mdpi" />
     <icon   src="www/res/icon/android/ic_launcher_hdpi.png"               density="hdpi" />
@@ -39,6 +32,5 @@
     <icon   src="www/res/icon/android/ic_launcher_xxhdpi.png"             density="xxhdpi" />
     <icon   src="www/res/icon/android/ic_launcher_xxxhdpi.png"            density="xxxhdpi" />
   </platform>
-
   
 </widget>
