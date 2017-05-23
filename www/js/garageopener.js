@@ -24,7 +24,7 @@ var door_status = DOOR_STATUS_UNKNWON;
 /* Variable with settings */
 var storedDeviceId    = '';
 var storedAccessToken = '';
-var storedDuration    = 0;
+var storedDuration    = 10;
 
 
 function updateDoorStatus(status)
@@ -142,7 +142,7 @@ function httpResultDoorAction(xmlhttp, timeout)
         {
           handleRefreshButton();
         }
-      }, storedDuration);
+      }, storedDuration * 1000);
   }
   else
   {
