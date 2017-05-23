@@ -13,6 +13,11 @@ var URL_GET_STATUS         = "https://api.particle.io/v1/devices/DEVICE/doorstat
 var URL_OPEN_DOOR          = "https://api.particle.io/v1/devices/DEVICE/open?access_token=TOKEN";
 var URL_CLOSE_DOOR         = "https://api.particle.io/v1/devices/DEVICE/close?access_token=TOKEN";
 
+var LOCAL_STORAGE_DEVICE_ID    = 'deviceId';
+var LOCAL_STORAGE_ACCESS_TOKEN = 'accessToken';
+var LOCAL_STORAGE_DURATION     = 'duration';
+var LOCAL_STORAGE_PASSWORD     = 'password';
+
 var HTTP_TIMEOUT           = 8000;
 var HTTP_GET               = 'GET';
 var HTTP_POST              = 'POST';
@@ -25,6 +30,10 @@ var door_status = DOOR_STATUS_UNKNWON;
 var storedDeviceId    = '';
 var storedAccessToken = '';
 var storedDuration    = 10;
+var storedPassword    = '';
+
+/* Variable with typed password */
+var typedPassword     = '';
 
 
 function updateDoorStatus(status)
@@ -200,20 +209,28 @@ function handleActionButton(e)
 
 function loadSettings()
 {
-  storedDeviceId = localStorage.getItem('deviceId');
+  storedDeviceId = localStorage.getItem(LOCAL_STORAGE_DEVICE_ID);
   if (storedDeviceId == null)
   {
     storedDeviceId = 'Insert Device ID';
   }
-  storedAccessToken = localStorage.getItem('accessToken');
+
+  storedAccessToken = localStorage.getItem(LOCAL_STORAGE_ACCESS_TOKEN);
   if (storedAccessToken == null)
   {
     storedAccessToken = 'Insert Access token';
   }
-  storedDuration = localStorage.getItem('duration');
+
+  storedDuration = localStorage.getItem(LOCAL_STORAGE_DURATION);
   if (storedDuration == null)
   {
     storedDuration = 10;
+  }
+
+  storedPassword = localStorage.getItem(LOCAL_STORAGE_PASSWORD);
+  if (storedPassword == null)
+  {
+    storedPassword = '';
   }
 } /* loadSettings */
 
@@ -224,6 +241,7 @@ function handleSettingsButton(e)
   document.getElementById('deviceId').value = storedDeviceId;
   document.getElementById('accessToken').value = storedAccessToken;
   document.getElementById('duration').value = storedDuration;
+  document.getElementById('password').value = storedPassword;
 
   /* Display settings page and hide main page */
   document.getElementById('mainpage').className = "hidden";
@@ -272,39 +290,69 @@ function validateDuration(duration)
 } /* validateDuration */
 
 
+function validatePassword(password)
+{
+  /* Password can be either empty or have 4 digits */
+  if (password.length == 0)
+  {
+    return true;
+  }
+  if (password.length == 4)
+  {
+    return /[0-9]{4}/g.test(password);
+  }
+  return false;
+} /* validatePassword */
+
+
 function handleSaveButton(e)
 {
+  var configOk    = true;
+  
   /* Retrieve values */
   var deviceId    = document.getElementById('deviceId').value;
   var accessToken = document.getElementById('accessToken').value;
   var duration    = Number(document.getElementById('duration').value);
-          
+  var password    = document.getElementById('password').value;
+  
   /* Validate each field */
   if (!validateDeviceId(deviceId))
   {
     document.getElementById('invalidDeviceId').className = "errorInput";
-    return;
+    configOk = false;
   }
   if (!validateAccessToken(accessToken))
   {
     document.getElementById('invalidAccessToken').className = "errorInput";
-    return;
+    configOk = false;
   }
   if (!validateDuration(duration))
   {
     document.getElementById('invalidDuration').className = "errorInput";
+    configOk = false;
+  }
+  if (!validatePassword(password))
+  {
+    document.getElementById('invalidPassword').className = "errorInput";
+    configOk = false;
+  }
+  
+  if (!configOk)
+  {
     return;
   }
   
   /* Store values to persistent storage */
-  localStorage.setItem('deviceId', deviceId);
-  localStorage.setItem('accessToken', accessToken);
-  localStorage.setItem('duration', Number(duration));
+  localStorage.setItem(LOCAL_STORAGE_DEVICE_ID, deviceId);
+  localStorage.setItem(LOCAL_STORAGE_ACCESS_TOKEN, accessToken);
+  localStorage.setItem(LOCAL_STORAGE_DURATION, Number(duration));
+  localStorage.setItem(LOCAL_STORAGE_PASSWORD, password);
   
   /* Update global values */
   storedDeviceId = deviceId;
   storedAccessToken = accessToken;
   storedDuration = duration;
+  storedPassword = password;
     
   /* Go back to main page */
   document.getElementById('mainpage').className = "visible";
@@ -312,13 +360,87 @@ function handleSaveButton(e)
 } /* handleSaveButton */
 
 
-function handleFocus(e)
+function handleSettingsItemFocus(e)
 {
   /* Hide error messages, if present */
   document.getElementById('invalidDeviceId').className = "hidden";
   document.getElementById('invalidAccessToken').className = "hidden";
   document.getElementById('invalidDuration').className = "hidden";
-} /* handleFocus */
+  document.getElementById('invalidPassword').className = "hidden";
+} /* handleSettingsItemFocus */
+
+
+function handleEnterPasswordKey(typedKey)
+{
+  /* Reset password if already reached 4 digits */
+  if (typedPassword.length >= 4)
+  {
+    typedPassword = '';
+    document.getElementById('digit1').style.color = 'black';
+    document.getElementById('digit2').style.color = 'black';
+    document.getElementById('digit3').style.color = 'black';
+    document.getElementById('digit4').style.color = 'black';
+  }
+  
+  typedPassword = typedPassword + typedKey;
+
+  if (typedPassword.length >= 1)
+  {
+    document.getElementById('digit1').innerHTML = "*";
+  }
+  else
+  {
+    document.getElementById('digit1').innerHTML = "&nbsp;";
+  }
+  if (typedPassword.length >= 2)
+  {
+    document.getElementById('digit2').innerHTML = "*";
+  }
+  else
+  {
+    document.getElementById('digit2').innerHTML = "&nbsp;";
+  }
+  if (typedPassword.length >= 3)
+  {
+    document.getElementById('digit3').innerHTML = "*";
+  }
+  else
+  {
+    document.getElementById('digit3').innerHTML = "&nbsp;";
+  }
+  if (typedPassword.length == 4)
+  {
+    document.getElementById('digit4').innerHTML = "*";
+  }
+  else
+  {
+    document.getElementById('digit4').innerHTML = "&nbsp;";
+  }
+
+  if (typedPassword.length < 4)
+  {
+    return;
+  }
+  
+  /* Display main screen in case of correct password and also
+     start refresh */
+  if (typedPassword == storedPassword)
+  {
+    document.getElementById('mainpage').className = "visible";
+    document.getElementById('settingspage').className = "hidden";
+    document.getElementById('passwordpage').className = "hidden";
+
+    /* Start HTTP request */
+    handleRefreshButton();
+    return;
+  }
+  
+  /* Change color to red in case of wrong password */
+  document.getElementById('digit1').style.color = 'red';
+  document.getElementById('digit2').style.color = 'red';
+  document.getElementById('digit3').style.color = 'red';
+  document.getElementById('digit4').style.color = 'red';
+} /* handleEnterPasswordKey */
 
 
 function windowLoad(e)
@@ -328,6 +450,15 @@ function windowLoad(e)
   
   /* Initialize status door and update display accordingly */
   updateDoorStatus(DOOR_STATUS_UNKNWON);
+
+  if (storedPassword.length > 0)
+  {
+    /* Display password page if password is required */
+    document.getElementById('mainpage').className = "hidden";
+    document.getElementById('settingspage').className = "hidden";
+    document.getElementById('passwordpage').className = "visible";
+    return;
+  }
   
   /* Start HTTP request */
   handleRefreshButton();
@@ -342,8 +473,17 @@ document.getElementById('refreshButton').addEventListener('click', handleRefresh
 document.getElementById('actionButton').addEventListener('click', handleActionButton, false);
 document.getElementById('settingsIcon').addEventListener('click', handleSettingsButton, false);
 document.getElementById('saveButton').addEventListener('click', handleSaveButton, false);
-document.getElementById('deviceId').addEventListener('change', handleFocus, false);
-document.getElementById('accessToken').addEventListener('change', handleFocus, false);
-document.getElementById('duration').addEventListener('change', handleFocus, false);
+document.getElementById('deviceId').addEventListener('change', handleSettingsItemFocus, false);
+document.getElementById('accessToken').addEventListener('change', handleSettingsItemFocus, false);
+document.getElementById('duration').addEventListener('change', handleSettingsItemFocus, false);
 
-
+document.getElementById('key1').addEventListener('click', function(){ handleEnterPasswordKey('1') }, false);
+document.getElementById('key2').addEventListener('click', function(){ handleEnterPasswordKey('2') }, false);
+document.getElementById('key3').addEventListener('click', function(){ handleEnterPasswordKey('3') }, false);
+document.getElementById('key4').addEventListener('click', function(){ handleEnterPasswordKey('4') }, false);
+document.getElementById('key5').addEventListener('click', function(){ handleEnterPasswordKey('5') }, false);
+document.getElementById('key6').addEventListener('click', function(){ handleEnterPasswordKey('6') }, false);
+document.getElementById('key7').addEventListener('click', function(){ handleEnterPasswordKey('7') }, false);
+document.getElementById('key8').addEventListener('click', function(){ handleEnterPasswordKey('8') }, false);
+document.getElementById('key9').addEventListener('click', function(){ handleEnterPasswordKey('9') }, false);
+document.getElementById('key0').addEventListener('click', function(){ handleEnterPasswordKey('0') }, false);

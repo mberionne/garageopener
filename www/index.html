@@ -7,7 +7,7 @@
 <body>
   <div class='header'>
     Garage opener
-		<span class="version">v 0.2</span>
+		<span class="version">v 0.3</span>
     <img src="img/settings.png" alt='Settings' title='Settings' class='settingsIcon' height="32" id='settingsIcon'/>
   </div>
   <div class='afterheader'>
@@ -31,7 +31,8 @@
         <a href="#" id='actionButton' class='actionButton'>Open</a>
     </div>
   </div>
-  <div id='settingspage' class='hidden'>
+
+	<div id='settingspage' class='hidden'>
     <br />  
     <fieldset>
       <legend>
@@ -56,12 +57,54 @@
         3 seconds and 60 seconds.<br />
       </div>
       <br />
+      Password:<br />
+      <input id="password" type="text" /><br />
+      <div id='invalidPassword' class='hidden'>
+        Invalid password! It must either be empty or a sequence
+        of 4 digits.<br />
+      </div>
+      <br />
       <button type='button' id='saveButton' class='savebutton'>
         Save
       </button>
     </fieldset>
   </div>
-    
+
+  <div id='passwordpage' class='hidden'>
+    <div class='pwdKeypad'>
+      <table class='pwdCode'>
+        <tr>
+          <td id='digit1' style='width:25%;'>&nbsp;</td>
+          <td id='digit2' style='width:25%;'>&nbsp;</td>
+          <td id='digit3' style='width:25%;'>&nbsp;</td>
+          <td id='digit4' style='width:25%;'>&nbsp;</td>
+        </tr>
+      </table>
+      <table class='pwdTable'>
+        <tr>
+          <td><a href="#" class="pwdButton" id='key1'>1</a></td>
+          <td><a href="#" class="pwdButton" id='key2'>2</a></td>
+          <td><a href="#" class="pwdButton" id='key3'>3</a></td>
+        </tr>
+        <tr>
+          <td><a href="#" class="pwdButton" id='key4'>4</a></td>
+          <td><a href="#" class="pwdButton" id='key5'>5</a></td>
+          <td><a href="#" class="pwdButton" id='key6'>6</a></td>
+        </tr>
+        <tr>
+          <td><a href="#" class="pwdButton" id='key7'>7</a></td>
+          <td><a href="#" class="pwdButton" id='key8'>8</a></td>
+          <td><a href="#" class="pwdButton" id='key9'>9</a></td>
+        </tr>
+        <tr>
+          <td><a href="#" class="pwdButton">&nbsp;</a></td>
+          <td><a href="#" class="pwdButton" id='key0'>0</a></td>
+          <td><a href="#" class="pwdButton">&nbsp;</a></td>
+        </tr>
+      </table>
+    </div>
+	</div>
+
   <script type="text/javascript" src="js/garageopener.js"></script>
 
 </body>
