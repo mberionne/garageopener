@@ -237,6 +237,12 @@ function loadSettings()
 
 function handleSettingsButton(e)
 {
+  /* If the password screen is displayed, don't process the settings button */
+  if (document.getElementById('passwordpage').className == "visible")
+  {
+    return;
+  }
+
   /* Populate fields */
   document.getElementById('deviceId').value = storedDeviceId;
   document.getElementById('accessToken').value = storedAccessToken;
@@ -307,7 +313,8 @@ function validatePassword(password)
 
 function handleSaveButton(e)
 {
-  var configOk    = true;
+  var configOk       = true;
+  var refreshNeeded  = false;
   
   /* Retrieve values */
   var deviceId    = document.getElementById('deviceId').value;
@@ -348,6 +355,12 @@ function handleSaveButton(e)
   localStorage.setItem(LOCAL_STORAGE_DURATION, Number(duration));
   localStorage.setItem(LOCAL_STORAGE_PASSWORD, password);
   
+  /* Check if refresh needed */
+  if (storedDeviceId != deviceId || storedAccessToken != accessToken)
+  {
+    refreshNeeded = true;
+  }
+  
   /* Update global values */
   storedDeviceId = deviceId;
   storedAccessToken = accessToken;
@@ -357,6 +370,12 @@ function handleSaveButton(e)
   /* Go back to main page */
   document.getElementById('mainpage').className = "visible";
   document.getElementById('settingspage').className = "hidden";
+  
+  /* Immediately start a refresh, if needed */
+  if (refreshNeeded)
+  {
+    handleRefreshButton();
+  }
 } /* handleSaveButton */
 
 
