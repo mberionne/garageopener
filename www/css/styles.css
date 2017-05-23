@@ -208,8 +208,8 @@ button.savebutton {
 .pwdKeypad {
   margin-top: 70px;
   margin-bottom: 50px;
-  margin-left: 10%;
-  margin-right: 10%;
+  margin-left: 8%;
+  margin-right: 8%;
   padding: 16px;
   border: 1px solid #bbbbbb;
   border-radius: 8px;
@@ -219,7 +219,7 @@ button.savebutton {
 .pwdTable {
   margin-top: 10px;
   margin-bottom: 10px;
-  width: 80%;
+  width: 90%;
   text-align: center;
   margin: 0px auto;
   table-layout: fixed;
@@ -232,7 +232,7 @@ button.savebutton {
   padding:5px;
   border: 2px solid #555555;
   border-radius: 8px;
-  width: 50%;
+  width: 65%;
   text-align: center;
   font-family:Arial;
   font-size:40px;
