@@ -176,12 +176,12 @@ function handleActionButton(e)
   if (door_status == DOOR_STATUS_OPEN)
   {
     nextDoorStatus = DOOR_STATUS_CLOSING;
-    url = URL_OPEN_DOOR;
+    url = URL_CLOSE_DOOR;
   }
   else if (door_status == DOOR_STATUS_CLOSED)
   {
     nextDoorStatus = DOOR_STATUS_OPENING;
-    url = URL_CLOSE_DOOR;
+    url = URL_OPEN_DOOR;
   }
   else
   {
