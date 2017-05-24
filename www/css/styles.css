@@ -3,6 +3,7 @@
 *******************************************/
 body {
   background-color: white;
+  background-image: url("background.jpg");
   color: black;
 }
 
@@ -28,7 +29,8 @@ body {
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffab23), to(#ffec64));
   background-image: -webkit-linear-gradient(#ffec64, #ffab23);
   background-image: -o-linear-gradient(#ffec64, #ffab23);
-  height: 40px;
+  height: 50px;
+  padding-top: 10px;
 }
 
 .version {
@@ -60,6 +62,7 @@ img.settingsIcon {
   padding: 16px;
   border: 1px solid #bbbbbb;
   border-radius: 8px;
+  background-color: white;
 }
 
 /* Refresh button */
@@ -123,6 +126,7 @@ fieldset {
   border-radius: 10px;
   padding: 3%;
   text-align: left;
+  background-color: white;
 }
 
 legend {
@@ -214,6 +218,7 @@ button.savebutton {
   border: 1px solid #bbbbbb;
   border-radius: 8px;
   text-align: center;
+  background-color: white;
 }
 
 .pwdTable {

@@ -9,6 +9,10 @@ var DOOR_STATUS_REFRESHING = 6;
 var DOOR_STATUS_NO_CONFIG  = 7;
 var DOOR_STATUS_TIMEOUT    = 8;
 
+var PAGE_MAIN              = 0;
+var PAGE_SETTINGS          = 1;
+var PAGE_PASSWORD          = 2;
+
 var URL_GET_STATUS         = "https://api.particle.io/v1/devices/DEVICE/doorstatus?access_token=TOKEN";
 var URL_OPEN_DOOR          = "https://api.particle.io/v1/devices/DEVICE/open?access_token=TOKEN";
 var URL_CLOSE_DOOR         = "https://api.particle.io/v1/devices/DEVICE/close?access_token=TOKEN";
@@ -23,8 +27,9 @@ var HTTP_GET               = 'GET';
 var HTTP_POST              = 'POST';
 
 
-/* Door status */
-var door_status = DOOR_STATUS_UNKNWON;
+/* Global variables */
+var door_status  = DOOR_STATUS_UNKNWON;
+var current_page = PAGE_MAIN;
 
 /* Variable with settings */
 var storedDeviceId    = '';
@@ -238,7 +243,7 @@ function loadSettings()
 function handleSettingsButton(e)
 {
   /* If the password screen is displayed, don't process the settings button */
-  if (document.getElementById('passwordpage').className == "visible")
+  if (current_page != PAGE_MAIN)
   {
     return;
   }
@@ -250,8 +255,7 @@ function handleSettingsButton(e)
   document.getElementById('password').value = storedPassword;
 
   /* Display settings page and hide main page */
-  document.getElementById('mainpage').className = "hidden";
-  document.getElementById('settingspage').className = "visible";
+  displayPage(PAGE_SETTINGS);
 } /* handleSettingsButton */
 
 
@@ -368,8 +372,7 @@ function handleSaveButton(e)
   storedPassword = password;
     
   /* Go back to main page */
-  document.getElementById('mainpage').className = "visible";
-  document.getElementById('settingspage').className = "hidden";
+  displayPage(PAGE_MAIN);
   
   /* Immediately start a refresh, if needed */
   if (refreshNeeded)
@@ -382,10 +385,10 @@ function handleSaveButton(e)
 function handleSettingsItemFocus(e)
 {
   /* Hide error messages, if present */
-  document.getElementById('invalidDeviceId').className = "hidden";
-  document.getElementById('invalidAccessToken').className = "hidden";
-  document.getElementById('invalidDuration').className = "hidden";
-  document.getElementById('invalidPassword').className = "hidden";
+  document.getElementById('invalidDeviceId').className    = 'hidden';
+  document.getElementById('invalidAccessToken').className = 'hidden';
+  document.getElementById('invalidDuration').className    = 'hidden';
+  document.getElementById('invalidPassword').className    = 'hidden';
 } /* handleSettingsItemFocus */
 
 
@@ -405,35 +408,35 @@ function handleEnterPasswordKey(typedKey)
 
   if (typedPassword.length >= 1)
   {
-    document.getElementById('digit1').innerHTML = "*";
+    document.getElementById('digit1').innerHTML = '*';
   }
   else
   {
-    document.getElementById('digit1').innerHTML = "&nbsp;";
+    document.getElementById('digit1').innerHTML = '&nbsp;';
   }
   if (typedPassword.length >= 2)
   {
-    document.getElementById('digit2').innerHTML = "*";
+    document.getElementById('digit2').innerHTML = '*';
   }
   else
   {
-    document.getElementById('digit2').innerHTML = "&nbsp;";
+    document.getElementById('digit2').innerHTML = '&nbsp;';
   }
   if (typedPassword.length >= 3)
   {
-    document.getElementById('digit3').innerHTML = "*";
+    document.getElementById('digit3').innerHTML = '*';
   }
   else
   {
-    document.getElementById('digit3').innerHTML = "&nbsp;";
+    document.getElementById('digit3').innerHTML = '&nbsp;';
   }
   if (typedPassword.length == 4)
   {
-    document.getElementById('digit4').innerHTML = "*";
+    document.getElementById('digit4').innerHTML = '*';
   }
   else
   {
-    document.getElementById('digit4').innerHTML = "&nbsp;";
+    document.getElementById('digit4').innerHTML = '&nbsp;';
   }
 
   if (typedPassword.length < 4)
@@ -445,9 +448,7 @@ function handleEnterPasswordKey(typedKey)
      start refresh */
   if (typedPassword == storedPassword)
   {
-    document.getElementById('mainpage').className = "visible";
-    document.getElementById('settingspage').className = "hidden";
-    document.getElementById('passwordpage').className = "hidden";
+    displayPage(PAGE_MAIN);
 
     /* Start HTTP request */
     handleRefreshButton();
@@ -462,6 +463,40 @@ function handleEnterPasswordKey(typedKey)
 } /* handleEnterPasswordKey */
 
 
+function  displayPage(page)
+{
+  if (current_page == page)
+  {
+    return;
+  }
+  
+  var classMain     = 'hidden';
+  var classSettings = 'hidden';
+  var classPassword = 'hidden';
+  
+  switch(page)
+  {
+    case PAGE_MAIN:
+      classMain = 'visible';
+      break;
+    case PAGE_SETTINGS:
+      classSettings = 'visible';
+      break;
+    case PAGE_PASSWORD:
+      classPassword = 'visible';
+      break;
+    default:
+      return;
+  }
+  
+  document.getElementById('mainpage').className = classMain;
+  document.getElementById('settingspage').className = classSettings;
+  document.getElementById('passwordpage').className = classPassword;
+  
+  current_page = page;
+} /* displayPage */
+
+
 function windowLoad(e)
 {
   /* Load settings */
@@ -473,9 +508,7 @@ function windowLoad(e)
   if (storedPassword.length > 0)
   {
     /* Display password page if password is required */
-    document.getElementById('mainpage').className = "hidden";
-    document.getElementById('settingspage').className = "hidden";
-    document.getElementById('passwordpage').className = "visible";
+    displayPage(PAGE_PASSWORD);
     return;
   }
   
